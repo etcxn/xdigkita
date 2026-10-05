@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Dokumentasi API H2H - XDigitalKita</title>
+<meta name="description" content="Dokumentasi resmi API H2H XDigitalKita. Panduan integrasi pembuatan QRIS dinamis, cek status transaksi real-time, pengecekan saldo, dan penarikan dana.">
+<meta name="keywords" content="XDigitalKita API, dokumentasi QRIS, API H2H, payment API Indonesia, webhook QRIS">
+<meta name="author" content="XDigitalKita">
+<meta name="theme-color" content="#0b0b0c">
+<meta name="application-name" content="XDigitalKita">
+<link rel="canonical" href="https://xdigitalkita.my.id/docs">
+<link rel="apple-touch-icon" href="/icon.svg">
+<meta property="og:locale" content="id_ID">
+<meta property="og:site_name" content="XDigitalKita">
+<meta property="og:title" content="Dokumentasi API H2H - XDigitalKita">
+<meta property="og:description" content="Panduan integrasi API H2H QRIS XDigitalKita untuk developer dan pemilik platform.">
+<meta property="og:url" content="https://xdigitalkita.my.id/docs">
+<meta property="og:type" content="website">
+<meta property="og:image" content="/images/hero_fintech_qris_1791210767750.jpg">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/glass.css">
+</head>
+<body class="glass dark docs-body">
+
+<header class="glass-header">
+  <div class="brand">
+    <a href="/" class="brand-link">
+      <span class="brand-mark"><img class="ui-icon" src="/icon.svg" alt="XDigitalKita"></span>
+    </a>
+    <span class="brand-title">XDigitalKita Docs</span>
+  </div>
+  <div class="header-actions">
+    <a href="/" class="icon-btn" aria-label="Beranda" title="Beranda">
+      <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    </a>
+    <% if (user) { %>
+      <a href="/dashboard" class="glass-btn primary header-btn" title="Dashboard">
+        <span>Dashboard</span>
+      </a>
+    <% } else { %>
+      <a href="/login" class="glass-btn primary header-btn">
+        <span>Masuk</span>
+      </a>
+    <% } %>
+  </div>
+</header>
+
+<main class="page docs-page">
+  <div class="page-title">
+    <h1>Dokumentasi API H2H</h1>
+    <p>Integrasikan pembuatan pembayaran QRIS dinamis, sinkronisasi status otomatis, dan manajemen saldo secara programmatic ke dalam aplikasi atau bot Anda.</p>
+  </div>
+
+  <!-- Quick Info Banner -->
+  <section class="glass-card docs-overview-card">
+    <div class="docs-meta-grid">
+      <div class="docs-meta-item">
+        <span class="docs-meta-label">Base URL API</span>
+        <code class="docs-meta-val">https://xdigitalkita.my.id/api/h2h</code>
+      </div>
+      <div class="docs-meta-item">
+        <span class="docs-meta-label">Metode Autentikasi</span>
+        <code class="docs-meta-val">Header: X-API-Key: &lt;API_KEY&gt;</code>
+      </div>
+      <div class="docs-meta-item">
+        <span class="docs-meta-label">Biaya Admin Default</span>
+        <span class="docs-meta-val highlight-val">Rp <%= adminFee.toLocaleString('id-ID') %> per transaksi</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Autentikasi Section -->
+  <section class="glass-card docs-card" id="auth">
+    <div class="endpoint-badge-row">
+      <span class="api-method-badge info">AUTENTIKASI</span>
+      <span class="endpoint-path">Header Keamanan</span>
+    </div>
+    <h2>1. Manajemen Autentikasi API Key</h2>
+    <p>Setiap request ke endpoint <code>/api/h2h/*</code> memerlukan API Key valid. Anda dapat melihat dan me-regenerate API Key melalui halaman <a href="/profile" class="docs-link">Profil Pengguna</a> atau via endpoint khusus.</p>
+
+    <div class="code-box">
+      <div class="code-box-header">
+        <span>Header Wajib</span>
+        <button type="button" class="copy-code-btn" data-copy="X-API-Key: YOUR_API_KEY">Salin</button>
+      </div>
+      <pre><code>X-API-Key: YOUR_SECRET_API_KEY_HERE</code></pre>
+    </div>
+  </section>
+
+  <!-- Endpoint 1: Create QRIS -->
+  <section class="glass-card docs-card" id="create-qris">
+    <div class="endpoint-badge-row">
+      <span class="api-method-badge post">POST</span>
+      <span class="endpoint-path">/api/h2h/create</span>
+    </div>
+    <h2>2. Buat Transaksi QRIS Baru</h2>
+    <p>Membuat kode QRIS dinamis sekali pakai dengan total nominal otomatis ditambah biaya admin (Rp <%= adminFee.toLocaleString('id-ID') %>).</p>
+
+    <h3>Request Body (JSON)</h3>
+    <div class="params-table-wrap">
+      <table class="glass-table">
+        <thead>
+          <tr>
+            <th>Field</th>
+            <th>Tipe</th>
+            <th>Wajib</th>
+            <th>Keterangan</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>amount</code></td>
+            <td>Number</td>
+            <td>Ya</td>
+            <td>Nominal pembayaran (minimal <code>1000</code>).</td>
+          </tr>
+          <tr>
+            <td><code>description</code></td>
+            <td>String</td>
+            <td>Tidak</td>
+            <td>Keterangan transaksi (maksimal 180 karakter, default: "H2H").</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="code-box">
+      <div class="code-box-header">
+        <span>Contoh Request (cURL)</span>
+        <button type="button" class="copy-code-btn" data-copy='curl -X POST https://xdigitalkita.my.id/api/h2h/create \
+  -H "Content-Type: application/json" \
+  -H "X-API-Key: YOUR_API_KEY" \
+  -d "{\"amount\": 50000, \"description\": \"Order VIP #889\"}"'>Salin</button>
+      </div>
+      <pre><code>curl -X POST https://xdigitalkita.my.id/api/h2h/create \
+  -H "Content-Type: application/json" \
+  -H "X-API-Key: YOUR_API_KEY" \
+  -d '{
+    "amount": 50000,
+    "description": "Order VIP #889"
+  }'</code></pre>
+    </div>
+
+    <div class="code-box">
+      <div class="code-box-header">
+        <span>Contoh Response (200 OK)</span>
+      </div>
+      <pre><code>{
+  "success": true,
+  "data": {
+    "transaction_id": "TRX-8B391FA20",
+    "qr_url": "https://api.buatqris.site/qr/tr_8b391fa20.png",
+    "amount": 50000,
+    "admin_fee": 100,
+    "total_amount": 50100,
+    "status": "pending"
+  }
+}</code></pre>
+    </div>
+  </section>
+
+  <!-- Endpoint 2: Cek Status -->
+  <section class="glass-card docs-card" id="check-status">
+    <div class="endpoint-badge-row">
+      <span class="api-method-badge get">GET</span>
+      <span class="endpoint-path">/api/h2h/status/:transaction_id</span>
+    </div>
+    <h2>3. Cek Status Pembayaran</h2>
+    <p>Memeriksa status pelunasan transaksi. Bila pelanggan telah membayar, sistem otomatis mengupdate saldo akun pemilik dan mengirim broadcast Telegram.</p>
+
+    <div class="code-box">
+      <div class="code-box-header">
+        <span>Contoh Request (cURL)</span>
+        <button type="button" class="copy-code-btn" data-copy='curl -X GET https://xdigitalkita.my.id/api/h2h/status/TRX-8B391FA20 \
+  -H "X-API-Key: YOUR_API_KEY"'>Salin</button>
+      </div>
+      <pre><code>curl -X GET https://xdigitalkita.my.id/api/h2h/status/TRX-8B391FA20 \
+  -H "X-API-Key: YOUR_API_KEY"</code></pre>
+    </div>
+
+    <div class="code-box">
+      <div class="code-box-header">
+        <span>Contoh Response (200 OK)</span>
+      </div>
+      <pre><code>{
+  "success": true,
+  "data": {
+    "transaction_id": "TRX-8B391FA20",
+    "status": "success", // Nilai: pending | success | expired | failed
+    "amount": 50000,
+    "admin_fee": 100,
+    "total_amount": 50100
+  }
+}</code></pre>
+    </div>
+  </section>
+
+  <!-- Endpoint 3: Cek Saldo -->
+  <section class="glass-card docs-card" id="saldo">
+    <div class="endpoint-badge-row">
+      <span class="api-method-badge get">GET</span>
+      <span class="endpoint-path">/api/h2h/saldo</span>
+    </div>
+    <h2>4. Periksa Saldo Akun</h2>
+    <p>Mengambil nilai saldo terkini yang siap dicairkan.</p>
+
+    <div class="code-box">
+      <div class="code-box-header">
+        <span>Contoh Request (cURL)</span>
+        <button type="button" class="copy-code-btn" data-copy='curl -X GET https://xdigitalkita.my.id/api/h2h/saldo \
+  -H "X-API-Key: YOUR_API_KEY"'>Salin</button>
+      </div>
+      <pre><code>curl -X GET https://xdigitalkita.my.id/api/h2h/saldo \
+  -H "X-API-Key: YOUR_API_KEY"</code></pre>
+    </div>
+
+    <div class="code-box">
+      <div class="code-box-header">
+        <span>Contoh Response (200 OK)</span>
+      </div>
+      <pre><code>{
+  "success": true,
+  "saldo": 350000
+}</code></pre>
+    </div>
+  </section>
+
+  <!-- Endpoint 4: User Info -->
+  <section class="glass-card docs-card" id="user-info">
+    <div class="endpoint-badge-row">
+      <span class="api-method-badge get">GET</span>
+      <span class="endpoint-path">/api/h2h/user-info</span>
+    </div>
+    <h2>5. Informasi Akun &amp; Profil</h2>
+    <p>Mengambil detail akun pengembang, email, saldo, dan waktu pendaftaran.</p>
+
+    <div class="code-box">
+      <div class="code-box-header">
+        <span>Contoh Response (200 OK)</span>
+      </div>
+      <pre><code>{
+  "success": true,
+  "data": {
+    "id": "usr_9981ad",
+    "name": "Alex Developer",
+    "email": "alex@example.com",
+    "provider": "local",
+    "saldo": 350000,
+    "api_key": "sec_...",
+    "created_at": "2026-09-15T08:12:00.000Z"
+  }
+}</code></pre>
+    </div>
+  </section>
+
+  <!-- Endpoint 5: Withdraw API -->
+  <section class="glass-card docs-card" id="withdraw-api">
+    <div class="endpoint-badge-row">
+      <span class="api-method-badge post">POST</span>
+      <span class="endpoint-path">/api/h2h/withdraw</span>
+    </div>
+    <h2>6. Pengajuan Penarikan Dana (Withdraw)</h2>
+    <p>Melakukan request penarikan saldo secara otomatis ke rekening bank atau e-wallet (Min: Rp 12.500, Max: Rp 5.000.000).</p>
+
+    <div class="code-box">
+      <div class="code-box-header">
+        <span>Contoh Request (JSON)</span>
+        <button type="button" class="copy-code-btn" data-copy='curl -X POST https://xdigitalkita.my.id/api/h2h/withdraw \
+  -H "Content-Type: application/json" \
+  -H "X-API-Key: YOUR_API_KEY" \
+  -d "{\"amount\": 100000, \"bank\": \"BCA\", \"account\": \"1234567890\", \"holder\": \"ALEX DEV\"}"'>Salin</button>
+      </div>
+      <pre><code>curl -X POST https://xdigitalkita.my.id/api/h2h/withdraw \
+  -H "Content-Type: application/json" \
+  -H "X-API-Key: YOUR_API_KEY" \
+  -d '{
+    "amount": 100000,
+    "bank": "BCA",
+    "account": "1234567890",
+    "holder": "ALEX DEV"
+  }'</code></pre>
+    </div>
+
+    <div class="code-box">
+      <div class="code-box-header">
+        <span>Contoh Response (200 OK)</span>
+      </div>
+      <pre><code>{
+  "success": true,
+  "data": {
+    "id": "WD-AB78C19",
+    "amount": 100000,
+    "bank": "BCA",
+    "account": "1234567890",
+    "holder": "ALEX DEV",
+    "status": "pending",
+    "saldo": 250000
+  }
+}</code></pre>
+    </div>
+  </section>
+
+  <!-- Endpoint 6: Riwayat -->
+  <section class="glass-card docs-card" id="history">
+    <div class="endpoint-badge-row">
+      <span class="api-method-badge get">GET</span>
+      <span class="endpoint-path">/api/h2h/transactions?limit=10</span>
+    </div>
+    <h2>7. Riwayat &amp; Audit Log</h2>
+    <p>Endpoint pendukung untuk sinkronisasi mutasi dan audit:</p>
+    <ul class="docs-bullet-list">
+      <li><code>GET /api/h2h/transactions?limit=20</code> — Daftar transaksi pembayaran QRIS</li>
+      <li><code>GET /api/h2h/withdrawals?limit=20</code> — Daftar mutasi penarikan dana</li>
+      <li><code>GET /api/h2h/activity?limit=20</code> — Log aktivitas akun</li>
+      <li><code>POST /api/h2h/regenerate-key</code> — Mengganti API Key secara langsung</li>
+    </ul>
+  </section>
+
+  <!-- WebSocket Realtime Guide -->
+  <section class="glass-card docs-card" id="websocket">
+    <div class="endpoint-badge-row">
+      <span class="api-method-badge info">WS</span>
+      <span class="endpoint-path">wss://xdigitalkita.my.id/</span>
+    </div>
+    <h2>8. Integrasi WebSocket Real-Time</h2>
+    <p>Selain polling HTTP, Anda dapat mendengarkan notifikasi pembayaran secara instan melalui koneksi WebSocket.</p>
+
+    <div class="code-box">
+      <div class="code-box-header">
+        <span>JavaScript Client Example</span>
+      </div>
+      <pre><code>const ws = new WebSocket("wss://xdigitalkita.my.id/");
+
+ws.onopen = () => {
+  // Subscribe user
+  ws.send(JSON.stringify({ type: "subscribe", userId: "USER_ID" }));
+};
+
+// Check specific transaction
+ws.send(JSON.stringify({
+  type: "check",
+  userId: "USER_ID",
+  transactionId: "TRX-8B391FA20"
+}));
+
+ws.onmessage = (event) => {
+  const data = JSON.parse(event.data);
+  if (data.type === "payment" && data.status === "success") {
+    console.log("Pembayaran lunas! Saldo sekarang:", data.saldo);
+  }
+};</code></pre>
+    </div>
+  </section>
+
+</main>
+
+<% if (user) { %>
+<nav class="bottom-nav<%= isAdmin ? " admin-visible" : "" %>">
+  <a href="/dashboard" class="nav-item"><span class="nav-icon"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="m4 10 8-6 8 6v10H4z"/><path d="M9 20v-6h6v6"/></svg></span><span>Dashboard</span></a>
+  <a href="/qris" class="nav-item"><span class="nav-icon"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4z"/><path d="M14 14h3v3h-3zM17 17h3v3h-3z"/></svg></span><span>QRIS</span></a>
+  <a href="/withdraw" class="nav-item"><span class="nav-icon"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 4v12"/><path d="m7 11 5 5 5-5"/><path d="M5 20h14"/></svg></span><span>Tarik</span></a>
+  <% if (isAdmin) { %>
+    <a href="/admin" class="nav-item admin-only"><span class="nav-icon"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 3 4 7v5c0 4.6 3.1 7.7 8 9 4.9-1.3 8-4.4 8-9V7z"/><path d="m9 12 2 2 4-4"/></svg></span><span>Admin</span></a>
+  <% } %>
+  <a href="/docs" class="nav-item active"><span class="nav-icon"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M6 4h9l3 3v13H6z"/><path d="M14 4v4h4M9 12h6M9 16h6"/></svg></span><span>Docs</span></a>
+  <a href="/profile" class="nav-item"><span class="nav-icon"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="8" r="3"/><path d="M5 20c1.5-4 12.5-4 14 0"/></svg></span><span>Profil</span></a>
+</nav>
+<% } %>
+
+<script>
+  // Copy to clipboard handler
+  document.querySelectorAll(".copy-code-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const text = btn.getAttribute("data-copy");
+      if (text) {
+        navigator.clipboard.writeText(text).then(() => {
+          const original = btn.textContent;
+          btn.textContent = "Tersalin!";
+          btn.classList.add("copied");
+          setTimeout(() => {
+            btn.textContent = original;
+            btn.classList.remove("copied");
+          }, 2000);
+        });
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

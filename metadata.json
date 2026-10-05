@@ -1,0 +1,8 @@
+{
+  "name": "XDigitalKita",
+  "description": "Platform pembayaran QRIS dan manajemen transaksi digital.",
+  "requestFramePermissions": [],
+  "capabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

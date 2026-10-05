@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>XDigitalKita - Satu Dashboard untuk Alur Pembayaran yang Ringkas</title>
+<meta name="description" content="Platform QRIS H2H XDigitalKita untuk developer, merchant, dan bisnis. Satu dashboard untuk alur pembayaran yang ringkas, QRIS dinamis instan, dan integrasi API.">
+<meta name="keywords" content="XDigitalKita, QRIS H2H, API QRIS, QRIS dinamis, payment gateway Indonesia, dashboard pembayaran ringkas">
+<meta name="author" content="XDigitalKita">
+<meta name="theme-color" content="#0b0b0c">
+<meta name="application-name" content="XDigitalKita">
+<link rel="canonical" href="https://xdigitalkita.my.id/">
+<link rel="apple-touch-icon" href="/icon.svg">
+<meta property="og:locale" content="id_ID">
+<meta property="og:site_name" content="XDigitalKita">
+<meta property="og:title" content="XDigitalKita - Satu Dashboard untuk Alur Pembayaran yang Ringkas">
+<meta property="og:description" content="Platform pembayaran QRIS dinamis dan API H2H instan dalam satu dashboard ringkas.">
+<meta property="og:url" content="https://xdigitalkita.my.id/">
+<meta property="og:type" content="website">
+<meta property="og:image" content="/images/hero_fintech_qris_1791210767750.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="XDigitalKita - QRIS H2H">
+<meta name="twitter:description" content="Satu dashboard untuk alur pembayaran yang ringkas.">
+<meta name="twitter:image" content="/images/hero_fintech_qris_1791210767750.jpg">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/glass.css">
+</head>
+<body class="glass dark landing-body">
+
+<!-- Glass Header Navigation -->
+<header class="glass-header landing-header">
+  <a href="/" class="brand">
+    <span class="brand-mark">
+      <img class="ui-icon" src="/icon.svg" alt="XDigitalKita">
+    </span>
+    <span class="brand-title">XDigitalKita</span>
+  </a>
+
+  <nav class="landing-nav-links">
+    <a href="#tujuan" class="landing-nav-link">Tujuan</a>
+    <a href="#fitur" class="landing-nav-link">Fitur Utama</a>
+    <a href="#statistik" class="landing-nav-link">Statistik</a>
+    <a href="/docs" class="landing-nav-link">Dokumentasi API</a>
+  </nav>
+
+  <div class="header-actions">
+    <% if (user) { %>
+      <a href="/dashboard" class="glass-btn primary header-btn">
+        <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M4 10l8-6 8 6v10H4z"/></svg>
+        <span>Dashboard</span>
+      </a>
+    <% } else { %>
+      <a href="/login" class="glass-btn primary header-btn">
+        <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+        <span>Masuk / Daftar</span>
+      </a>
+    <% } %>
+  </div>
+</header>
+
+<main class="landing-container">
+
+  <!-- Hero Section -->
+  <section class="landing-hero">
+    <div class="hero-badge">
+      <span class="pulse-dot"></span>
+      <span>Platform QRIS H2H &amp; Otomasi Transaksi Digital</span>
+    </div>
+
+    <h1 class="hero-heading">
+      Satu dashboard untuk alur pembayaran yang ringkas.
+    </h1>
+
+    <p class="hero-subtitle">
+      XDigitalKita menyatukan pembuatan QRIS dinamis instan, rekonsiliasi pembayaran real-time, alert Telegram, dan pencairan saldo dalam satu portal terpadu tanpa hambatan birokrasi.
+    </p>
+
+    <div class="hero-cta-group">
+      <% if (user) { %>
+        <a href="/dashboard" class="glass-btn primary hero-btn">
+          <span>Buka Dashboard Anda</span>
+          <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      <% } else { %>
+        <a href="/login" class="glass-btn primary hero-btn">
+          <span>Mulai Sekarang</span>
+          <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      <% } %>
+      <a href="/docs" class="glass-btn secondary hero-btn">
+        <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        <span>Dokumentasi API</span>
+      </a>
+    </div>
+
+    <!-- Hero Media Preview -->
+    <div class="hero-media-wrapper glass-card">
+      <img src="/images/hero_fintech_qris_1791210767750.jpg" alt="XDigitalKita Dashboard Preview" class="hero-img" loading="eager" referrerpolicy="no-referrer">
+      <div class="hero-media-overlay">
+        <div class="media-stat-item">
+          <div class="media-stat-dot"></div>
+          <div>
+            <div class="media-stat-val">Online &amp; Aktif</div>
+            <div class="media-stat-sub">Deteksi Status Otomatis &lt; 2 Detik</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Live Metrics / Social Proof Section -->
+  <section id="statistik" class="section-block">
+    <div class="section-kicker">DATA &amp; PENCAPAIAN KOMUNITAS</div>
+    <h2 class="section-heading">Pertumbuhan Transaksi Terpercaya</h2>
+    <p class="section-sub">Data statistik langsung yang terintegrasi transparan dengan basis operasional kami.</p>
+
+    <div class="stats-bento-grid">
+      <!-- Stat 1: Users -->
+      <div class="glass-card stat-bento-card">
+        <div class="stat-card-icon user-icon">
+          <svg class="ui-icon animated-icon" viewBox="0 0 24 24" fill="none" stroke-width="2">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+        </div>
+        <div class="stat-meta">
+          <div class="stat-number tabular-nums">
+            1K + <%= stats.realUsers %>
+          </div>
+          <div class="stat-label">Total Pengguna Terdaftar</div>
+          <div class="stat-detail">
+            Total akumulasi: <span class="highlight-val"><%= stats.totalUsers.toLocaleString("id-ID") %></span> member terdaftar
+          </div>
+        </div>
+      </div>
+
+      <!-- Stat 2: Transactions -->
+      <div class="glass-card stat-bento-card">
+        <div class="stat-card-icon trx-icon">
+          <svg class="ui-icon animated-icon" viewBox="0 0 24 24" fill="none" stroke-width="2">
+            <rect x="2" y="5" width="20" height="14" rx="2"/>
+            <line x1="2" y1="10" x2="22" y2="10"/>
+            <path d="M7 15h.01M11 15h2"/>
+          </svg>
+        </div>
+        <div class="stat-meta">
+          <div class="stat-number tabular-nums">
+            3,4K + <%= stats.realTransactions %>
+          </div>
+          <div class="stat-label">Total Transaksi QRIS</div>
+          <div class="stat-detail">
+            Total akumulasi: <span class="highlight-val"><%= stats.totalTransactions.toLocaleString("id-ID") %></span> pembayaran sukses
+          </div>
+        </div>
+      </div>
+
+      <!-- Stat 3: Withdrawals -->
+      <div class="glass-card stat-bento-card">
+        <div class="stat-card-icon wd-icon">
+          <svg class="ui-icon animated-icon" viewBox="0 0 24 24" fill="none" stroke-width="2">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+        </div>
+        <div class="stat-meta">
+          <div class="stat-number tabular-nums">
+            342 + <%= stats.realWithdrawals %>
+          </div>
+          <div class="stat-label">Pencairan Dana (WD) Selesai</div>
+          <div class="stat-detail">
+            Total akumulasi: <span class="highlight-val"><%= stats.totalWithdrawals.toLocaleString("id-ID") %></span> penarikan dana diproses
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tujuan Website Section -->
+  <section id="tujuan" class="section-block">
+    <div class="section-kicker">TUJUAN &amp; MISI KAMI</div>
+    <h2 class="section-heading">Mengapa XDigitalKita Dibangun?</h2>
+    
+    <div class="glass-card mission-highlight-card">
+      <div class="mission-quote">
+        “Satu dashboard untuk alur pembayaran yang ringkas.”
+      </div>
+      <p class="mission-desc">
+        Banyak developer, toko online, dan bot creator menghadapi tantangan berat: API pembayaran yang rumit, syarat legalitas berbelit-belit, biaya potongan tersembunyi, dan proses pencairan dana yang lambat.
+        XDigitalKita diciptakan sebagai jembatan yang menyederhanakan seluruh alur: mulai dari hit API pembuatan QRIS, pembayaran dinamis pembeli, verifikasi otomatis seketika via Telegram, hingga penarikan dana ke rekening bank atau e-wallet tanpa ribet.
+      </p>
+
+      <div class="purpose-grid">
+        <div class="purpose-item">
+          <div class="purpose-icon">
+            <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 14 14"/></svg>
+          </div>
+          <div>
+            <h4>Instan Tanpa Antre</h4>
+            <p>Kode QRIS dinamis siap dipindai dalam hitungan detik setelah request dibuat.</p>
+          </div>
+        </div>
+
+        <div class="purpose-item">
+          <div class="purpose-icon">
+            <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div>
+            <h4>Aman &amp; Terverifikasi</h4>
+            <p>Setiap transaksi dipantau dengan hashing secure token dan bukti pembayaran tersimpan rapi.</p>
+          </div>
+        </div>
+
+        <div class="purpose-item">
+          <div class="purpose-icon">
+            <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <div>
+            <h4>Notifikasi Telegram Terbuka</h4>
+            <p>Broadcast status pembayaran baru dan sukses ke channel secara transparan.</p>
+          </div>
+        </div>
+
+        <div class="purpose-item">
+          <div class="purpose-icon">
+            <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          </div>
+          <div>
+            <h4>Pencairan Saldo Fleksibel</h4>
+            <p>Tarik saldo kapan saja ke seluruh bank nasional dan e-wallet utama di Indonesia.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Fitur Utama Bento Grid -->
+  <section id="fitur" class="section-block">
+    <div class="section-kicker">FITUR &amp; KAPABILITAS</div>
+    <h2 class="section-heading">Solusi Lengkap untuk Segala Kebutuhan</h2>
+    <p class="section-sub">Didesain dengan perhatian mendalam pada kecepatan eksekusi dan kemudahan integrasi.</p>
+
+    <div class="features-bento-grid">
+      <!-- Bento 1: QRIS Dinamis -->
+      <div class="glass-card feature-card feature-wide">
+        <div class="feature-header">
+          <div class="feature-icon">
+            <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3z"/><rect x="14" y="14" width="3" height="3"/><rect x="18" y="18" width="3" height="3"/></svg>
+          </div>
+          <span class="feature-badge">Otomasi Presisi</span>
+        </div>
+        <h3>QRIS Dinamis Sekali Pakai</h3>
+        <p>Setiap transaksi menghasilkan QRIS unik sesuai nominal pesanan plus biaya admin terjangkau (Rp <%= adminFee.toLocaleString('id-ID') %>). Pelanggan dapat membayar via BCA, Mandiri, BRI, GoPay, OVO, Dana, ShopeePay, dan seluruh aplikasi perbankan berlisensi QRIS.</p>
+        
+        <div class="feature-visual-row">
+          <img src="/images/qris_scan_terminal_1791210780976.jpg" alt="Scanning QRIS Code" class="feature-thumb" loading="lazy" referrerpolicy="no-referrer">
+          <div class="feature-bullets">
+            <div class="bullet-item">✓ Kode unik otomatis mendeteksi status bayar</div>
+            <div class="bullet-item">✓ Tidak perlu upload bukti transfer manual</div>
+            <div class="bullet-item">✓ Kompatibel dengan semua scan QR aplikasi bank &amp; e-wallet</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bento 2: H2H API -->
+      <div class="glass-card feature-card">
+        <div class="feature-header">
+          <div class="feature-icon">
+            <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          </div>
+          <span class="feature-badge">Developer API</span>
+        </div>
+        <h3>RESTful H2H API</h3>
+        <p>Integrasikan pembuatan transaksi, pemeriksaan saldo, dan withdraw langsung dari source code bot atau web backend Anda hanya dengan header <code>X-API-Key</code>.</p>
+        <div class="code-preview-compact">
+          <code>curl -X POST /api/h2h/create \<br>&nbsp;&nbsp;-H "X-API-Key: YOUR_KEY" \<br>&nbsp;&nbsp;-d '{"amount": 25000}'</code>
+        </div>
+      </div>
+
+      <!-- Bento 3: Realtime Notification -->
+      <div class="glass-card feature-card">
+        <div class="feature-header">
+          <div class="feature-icon">
+            <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M22 2L11 13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          </div>
+          <span class="feature-badge">Telegram Alert</span>
+        </div>
+        <h3>Sinkronisasi &amp; Telegram</h3>
+        <p>Lacak transaksi secara otomatis. Saat pembayaran lunas, sistem secara instan mengirimkan notifikasi banner kaya ke channel Telegram dan menambah saldo akun Anda.</p>
+      </div>
+
+      <!-- Bento 4: Pencairan Cepat -->
+      <div class="glass-card feature-card feature-wide">
+        <div class="feature-header">
+          <div class="feature-icon">
+            <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          </div>
+          <span class="feature-badge">Pencairan Terjadwal</span>
+        </div>
+        <h3>Pencairan Dana (Withdraw) Transparan</h3>
+        <p>Tarik saldo pendapatan Anda ke rekening bank atau dompet digital tanpa batasan rumit. Admin kami memproses penarikan dengan verifikasi bukti transfer resmi yang dikirimkan langsung ke channel.</p>
+        <div class="bank-logos-list">
+          <span class="bank-pill">BCA</span>
+          <span class="bank-pill">Mandiri</span>
+          <span class="bank-pill">BRI</span>
+          <span class="bank-pill">BNI</span>
+          <span class="bank-pill">DANA</span>
+          <span class="bank-pill">GoPay</span>
+          <span class="bank-pill">OVO</span>
+          <span class="bank-pill">ShopeePay</span>
+          <span class="bank-pill">SeaBank</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive QRIS Simulator Demo Card -->
+  <section class="section-block">
+    <div class="section-kicker">UJI COBA INTERAKTIF</div>
+    <h2 class="section-heading">Simulasi Pembuatan QRIS</h2>
+    <p class="section-sub">Lihat bagaimana sistem menghitung biaya admin dan menyiapkan kode pembayaran secara transparan.</p>
+
+    <div class="glass-card demo-simulator-card">
+      <div class="demo-calc-grid">
+        <div class="demo-input-side">
+          <label class="demo-label" for="demoAmount">Nominal Transaksi (Rp)</label>
+          <div class="demo-input-wrap">
+            <span class="demo-currency">Rp</span>
+            <input type="number" id="demoAmount" class="glass-input demo-input" value="25000" min="1000" step="1000">
+          </div>
+          <div class="demo-quick-amounts">
+            <button type="button" class="quick-val-btn" data-val="10000">10k</button>
+            <button type="button" class="quick-val-btn" data-val="25000">25k</button>
+            <button type="button" class="quick-val-btn" data-val="50000">50k</button>
+            <button type="button" class="quick-val-btn" data-val="100000">100k</button>
+          </div>
+          <label class="demo-label" for="demoDesc">Keterangan Pesanan</label>
+          <input type="text" id="demoDesc" class="glass-input demo-input" value="Order Paket Pro #042">
+          
+          <div class="demo-action-row">
+            <% if (user) { %>
+              <a href="/qris" class="glass-btn primary">Buka Pembuat QRIS Asli</a>
+            <% } else { %>
+              <a href="/login" class="glass-btn primary">Daftar untuk Buat QRIS Asli</a>
+            <% } %>
+          </div>
+        </div>
+
+        <div class="demo-preview-side">
+          <div class="demo-receipt-card">
+            <div class="receipt-header">
+              <span class="receipt-brand">XDigitalKita QRIS</span>
+              <span class="receipt-status">Simulasi Real-time</span>
+            </div>
+            <div class="receipt-row">
+              <span>Nominal Pesanan:</span>
+              <span id="calcSubtotal" class="tabular-nums font-bold">Rp 25.000</span>
+            </div>
+            <div class="receipt-row">
+              <span>Biaya Layanan Admin:</span>
+              <span class="tabular-nums">Rp <%= adminFee.toLocaleString('id-ID') %></span>
+            </div>
+            <div class="receipt-divider"></div>
+            <div class="receipt-row total-row">
+              <span>Total yang Ditagih:</span>
+              <span id="calcTotal" class="tabular-nums receipt-total">Rp 25.100</span>
+            </div>
+            <div class="receipt-notice">
+              ✨ QRIS dinamis akan langsung muncul dengan status polling WebSocket otomatis setelah transaksi di-submit.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cara Kerja / 3 Steps -->
+  <section class="section-block">
+    <div class="section-kicker">LANGKAH SEDERHANA</div>
+    <h2 class="section-heading">Alur Kerja Tanpa Hambatan</h2>
+
+    <div class="steps-grid">
+      <div class="glass-card step-card">
+        <div class="step-num">01</div>
+        <h4>Buat Akun &amp; API Key</h4>
+        <p>Daftar dalam 1 menit menggunakan email atau OAuth Google / GitHub. Salin API Key pribadi dari profil Anda.</p>
+      </div>
+
+      <div class="glass-card step-card">
+        <div class="step-num">02</div>
+        <h4>Generate QRIS</h4>
+        <p>Buat transaksi dinamis lewat dashboard web atau panggil endpoint H2H <code>/api/h2h/create</code>.</p>
+      </div>
+
+      <div class="glass-card step-card">
+        <div class="step-num">03</div>
+        <h4>Terima &amp; Cairkan Saldo</h4>
+        <p>Sistem memverifikasi pelunasan secara otomatis. Saldo masuk seketika dan siap ditarik ke rekening Anda.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Banner Bottom -->
+  <section class="landing-cta-banner glass-card">
+    <div class="cta-content">
+      <h2>Siap Merapikan Alur Pembayaran Digital Anda?</h2>
+      <p>Bergabunglah bersama ribuan pengguna yang mengandalkan XDigitalKita untuk penerimaan QRIS instan.</p>
+      <div class="cta-actions">
+        <% if (user) { %>
+          <a href="/dashboard" class="glass-btn primary hero-btn">Masuk ke Dashboard</a>
+        <% } else { %>
+          <a href="/login" class="glass-btn primary hero-btn">Daftar Akun Sekarang</a>
+        <% } %>
+        <a href="/docs" class="glass-btn secondary hero-btn">Baca Panduan API</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- Footer -->
+<footer class="landing-footer">
+  <div class="footer-wrap">
+    <div class="footer-brand">
+      <span class="brand-mark"><img class="ui-icon" src="/icon.svg" alt=""></span>
+      <span class="brand-text">XDigitalKita</span>
+    </div>
+    <div class="footer-info">
+      <span>Satu dashboard untuk alur pembayaran yang ringkas.</span>
+    </div>
+    <div class="footer-links">
+      <a href="/login">Masuk / Daftar</a>
+      <a href="/docs">Dokumentasi API</a>
+      <% if (telegramChannelUrl) { %>
+        <a href="<%= telegramChannelUrl %>" target="_blank" rel="noopener">Telegram Channel</a>
+      <% } %>
+    </div>
+  </div>
+  <div class="footer-copy">
+    &copy; <%= new Date().getFullYear() %> XDigitalKita. All rights reserved.
+  </div>
+</footer>
+
+<script>
+  // Interactive Simulator Logic
+  const adminFee = <%= adminFee %>;
+  const inputAmount = document.getElementById("demoAmount");
+  const calcSubtotal = document.getElementById("calcSubtotal");
+  const calcTotal = document.getElementById("calcTotal");
+  const quickBtns = document.querySelectorAll(".quick-val-btn");
+
+  function updateReceipt() {
+    let val = Number(inputAmount.value) || 0;
+    if (val < 0) val = 0;
+    calcSubtotal.textContent = "Rp " + val.toLocaleString("id-ID");
+    calcTotal.textContent = "Rp " + (val + adminFee).toLocaleString("id-ID");
+  }
+
+  if (inputAmount) {
+    inputAmount.addEventListener("input", updateReceipt);
+  }
+
+  quickBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+      inputAmount.value = btn.getAttribute("data-val");
+      updateReceipt();
+    });
+  });
+</script>
+
+</body>
+</html>

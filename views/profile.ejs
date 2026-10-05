@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Profil - XDigitalKita</title>
+<meta name="description" content="Halaman profil akun XDigitalKita untuk mengelola informasi akun, saldo, dan API key.">
+<meta name="keywords" content="XDigitalKita profil, API key QRIS, akun XDigitalKita">
+<meta name="author" content="XDigitalKita">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="googlebot" content="noindex, nofollow, noarchive">
+<meta name="theme-color" content="#0b0b0c">
+<meta name="application-name" content="XDigitalKita">
+<link rel="canonical" href="https://xdigitalkita.my.id/profile">
+<link rel="apple-touch-icon" href="/icon.svg">
+<meta property="og:locale" content="id_ID">
+<meta property="og:site_name" content="XDigitalKita">
+<meta property="og:title" content="Profil - XDigitalKita">
+<meta property="og:description" content="Halaman profil akun XDigitalKita untuk mengelola informasi akun, saldo, dan API key.">
+<meta property="og:url" content="https://xdigitalkita.my.id/profile">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://xdigitalkita.my.id/icon.svg">
+<meta property="og:image:alt" content="XDigitalKita">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Profil - XDigitalKita">
+<meta name="twitter:description" content="Halaman profil akun XDigitalKita untuk mengelola informasi akun, saldo, dan API key.">
+<meta name="twitter:image" content="https://xdigitalkita.my.id/icon.svg">
+<meta name="twitter:image:alt" content="XDigitalKita">
+<link rel="sitemap" type="application/xml" href="/sitemap.xml">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/glass.css">
+<meta name="telegram-channel-url" content="<%= telegramChannelUrl || '' %>">
+<meta name="telegram-channel-title" content="<%= telegramChannelTitle || 'Channel Information' %>">
+</head>
+<body class="glass dark">
+<header class="glass-header">
+  <div class="brand">
+    <span class="brand-mark"><img class="ui-icon" src="/icon.svg" alt=""></span>
+    <span>Profil</span>
+  </div>
+  <div class="header-actions">
+    <button class="icon-btn" id="themeBtn" type="button" aria-label="Ganti tema"><svg class="ui-icon" id="themeIcon" viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+  </div>
+</header>
+<main class="page">
+  <div class="page-title"><h1>Akun Saya</h1><p>API key dipindahkan ke profil agar dashboard tetap rapi.</p></div>
+
+  <section class="glass-card">
+    <div class="profile-head">
+      <div class="profile-avatar"<% if (user.avatar) { %> style="background-image:url('<%= user.avatar %>')"<% } %>><% if (!user.avatar) { %><%= user.name ? user.name[0].toUpperCase() : "U" %><% } %></div>
+      <div class="profile-copy"><h1><%= user.name || "Pengguna" %></h1><p><%= user.email %></p></div>
+    </div>
+    <div class="info-list">
+      <div class="info-row"><span>Provider</span><strong><%= user.provider || "local" %></strong></div>
+      <div class="info-row"><span>Saldo</span><strong>Rp <%= Number(user.saldo || 0).toLocaleString('id-ID') %></strong></div>
+      <div class="info-row"><span>Bergabung</span><strong><%= new Date(user.createdAt).toLocaleDateString('id-ID') %></strong></div>
+    </div>
+  </section>
+
+  <section class="glass-card">
+    <h2>API Key</h2>
+    <div class="api-key-box">
+      <code id="apiKey"><%= user.apiKey %></code>
+      <div class="api-actions">
+        <button class="glass-btn small" id="copyKey" type="button">Salin</button>
+        <button class="glass-btn small outline" id="regenKey" type="button">Regenerasi</button>
+      </div>
+    </div>
+    <p style="margin-top:0.7rem;color:var(--text-muted);font-size:0.63rem;line-height:1.5">Regenerasi API key akan membuat key lama tidak bisa dipakai lagi.</p>
+  </section>
+
+  <section class="glass-card">
+    <h2>Preferensi</h2>
+    <button class="glass-btn outline" id="logoutBtn" type="button">Keluar dari akun</button>
+  </section>
+</main>
+<nav class="bottom-nav<%= isAdmin ? " admin-visible" : "" %>">
+  <a href="/dashboard" class="nav-item"><span class="nav-icon"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="m4 10 8-6 8 6v10H4z"/><path d="M9 20v-6h6v6"/></svg></span><span>Home</span></a>
+  <a href="/qris" class="nav-item"><span class="nav-icon"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4z"/><path d="M14 14h3v3h-3zM17 17h3v3h-3z"/></svg></span><span>QRIS</span></a>
+  <a href="/withdraw" class="nav-item"><span class="nav-icon"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 4v12"/><path d="m7 11 5 5 5-5"/><path d="M5 20h14"/></svg></span><span>Tarik</span></a>
+<% if (isAdmin) { %>
+  <a href="/admin" class="nav-item admin-only"><span class="nav-icon"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 3 4 7v5c0 4.6 3.1 7.7 8 9 4.9-1.3 8-4.4 8-9V7z"/><path d="m9 12 2 2 4-4"/></svg></span><span>Admin</span></a>
+<% } %>
+  <a href="/docs" class="nav-item"><span class="nav-icon"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M6 4h9l3 3v13H6z"/><path d="M14 4v4h4M9 12h6M9 16h6"/></svg></span><span>Docs</span></a>
+  <a href="/profile" class="nav-item active"><span class="nav-icon"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="8" r="3"/><path d="M5 20c1.5-4 12.5-4 14 0"/></svg></span><span>Profil</span></a>
+</nav>
+<script src="/js/main.js"></script>
+</body>
+</html>

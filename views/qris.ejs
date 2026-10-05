@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Buat QRIS - XDigitalKita</title>
+<meta name="description" content="Buat QRIS dinamis melalui XDigitalKita dengan biaya admin Rp 100 untuk setiap QRIS yang dibuat.">
+<meta name="keywords" content="buat QRIS, QRIS dinamis, QRIS H2H, XDigitalKita QRIS">
+<meta name="author" content="XDigitalKita">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="googlebot" content="noindex, nofollow, noarchive">
+<meta name="theme-color" content="#0b0b0c">
+<meta name="application-name" content="XDigitalKita">
+<link rel="canonical" href="https://xdigitalkita.my.id/qris">
+<link rel="apple-touch-icon" href="/icon.svg">
+<meta property="og:locale" content="id_ID">
+<meta property="og:site_name" content="XDigitalKita">
+<meta property="og:title" content="Buat QRIS - XDigitalKita">
+<meta property="og:description" content="Buat QRIS dinamis melalui XDigitalKita dengan biaya admin Rp 100 untuk setiap QRIS yang dibuat.">
+<meta property="og:url" content="https://xdigitalkita.my.id/qris">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://xdigitalkita.my.id/icon.svg">
+<meta property="og:image:alt" content="XDigitalKita">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Buat QRIS - XDigitalKita">
+<meta name="twitter:description" content="Buat QRIS dinamis melalui XDigitalKita dengan biaya admin Rp 100 untuk setiap QRIS yang dibuat.">
+<meta name="twitter:image" content="https://xdigitalkita.my.id/icon.svg">
+<meta name="twitter:image:alt" content="XDigitalKita">
+<link rel="sitemap" type="application/xml" href="/sitemap.xml">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/glass.css">
+<meta name="telegram-channel-url" content="<%= telegramChannelUrl || '' %>">
+<meta name="telegram-channel-title" content="<%= telegramChannelTitle || 'Channel Information' %>">
+</head>
+<body class="glass dark">
+<header class="glass-header">
+  <div class="brand">
+    <span class="brand-mark"><img class="ui-icon" src="/icon.svg" alt=""></span>
+    <span>Buat QRIS</span>
+  </div>
+  <div class="header-actions"><a href="/dashboard" class="icon-btn" aria-label="Kembali"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg></a></div>
+</header>
+<main class="page">
+  <div class="page-title"><h1>QRIS Dinamis</h1><p>Buat tagihan QRIS sekali pakai dengan biaya admin Rp <%= adminFee.toLocaleString('id-ID') %>.</p></div>
+  <section class="glass-card">
+    <div class="alert" id="qrisAlert"></div>
+    <input class="glass-input" type="number" id="amount" min="1000" inputmode="numeric" placeholder="Nominal (min 1000)">
+    <input class="glass-input" type="text" id="description" maxlength="180" placeholder="Keterangan transaksi">
+    <div class="qris-info">
+      <div class="qris-info-row"><span>Biaya admin</span><strong>Rp <%= adminFee.toLocaleString('id-ID') %></strong></div>
+      <div class="qris-info-row"><span>Total dibayar</span><strong id="previewTotal">Rp 0</strong></div>
+    </div>
+    <button class="glass-btn primary" id="createBtn" type="button">Buat QRIS</button>
+    <div id="qrisResult" style="display:none;margin-top:0.85rem">
+      <div class="qr-wrap"><img id="qrImage" src="" alt="QRIS"></div>
+      <div class="qris-info">
+        <div class="qris-info-row"><span>Nominal</span><strong id="qrisAmount"></strong></div>
+        <div class="qris-info-row"><span>Biaya admin</span><strong id="qrisFee"></strong></div>
+        <div class="qris-info-row"><span>Total</span><strong id="qrisTotal"></strong></div>
+        <div class="qris-info-row"><span>ID</span><code id="qrisId"></code></div>
+      </div>
+      <button class="glass-btn outline" id="checkBtn" type="button">Cek Status</button>
+      <div style="margin-top:0.65rem"><span id="statusBadge" class="badge pending">pending</span></div>
+    </div>
+  </section>
+</main>
+<nav class="bottom-nav<%= isAdmin ? " admin-visible" : "" %>">
+  <a href="/dashboard" class="nav-item"><span class="nav-icon"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="m4 10 8-6 8 6v10H4z"/><path d="M9 20v-6h6v6"/></svg></span><span>Home</span></a>
+  <a href="/qris" class="nav-item active"><span class="nav-icon"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4z"/><path d="M14 14h3v3h-3zM17 17h3v3h-3z"/></svg></span><span>QRIS</span></a>
+  <a href="/withdraw" class="nav-item"><span class="nav-icon"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 4v12"/><path d="m7 11 5 5 5-5"/><path d="M5 20h14"/></svg></span><span>Tarik</span></a>
+<% if (isAdmin) { %>
+  <a href="/admin" class="nav-item admin-only"><span class="nav-icon"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 3 4 7v5c0 4.6 3.1 7.7 8 9 4.9-1.3 8-4.4 8-9V7z"/><path d="m9 12 2 2 4-4"/></svg></span><span>Admin</span></a>
+<% } %>
+  <a href="/docs" class="nav-item"><span class="nav-icon"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M6 4h9l3 3v13H6z"/><path d="M14 4v4h4M9 12h6M9 16h6"/></svg></span><span>Docs</span></a>
+  <a href="/profile" class="nav-item"><span class="nav-icon"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="8" r="3"/><path d="M5 20c1.5-4 12.5-4 14 0"/></svg></span><span>Profil</span></a>
+</nav>
+<script src="/js/main.js"></script>
+</body>
+</html>

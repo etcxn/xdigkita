@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /dashboard
+Disallow: /qris
+Disallow: /withdraw
+Disallow: /profile
+Disallow: /api/
+Disallow: /auth/
+Sitemap: https://xdigitalkita.my.id/sitemap.xml

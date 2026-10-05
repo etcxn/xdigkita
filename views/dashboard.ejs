@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Dashboard - XDigitalKita</title>
+<meta name="description" content="Dashboard XDigitalKita untuk mengelola saldo, QRIS, transaksi, aktivitas, dan akses API.">
+<meta name="keywords" content="XDigitalKita dashboard, saldo QRIS, transaksi QRIS, API QRIS">
+<meta name="author" content="XDigitalKita">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="googlebot" content="noindex, nofollow, noarchive">
+<meta name="theme-color" content="#0b0b0c">
+<meta name="application-name" content="XDigitalKita">
+<link rel="canonical" href="https://xdigitalkita.my.id/dashboard">
+<link rel="apple-touch-icon" href="/icon.svg">
+<meta property="og:locale" content="id_ID">
+<meta property="og:site_name" content="XDigitalKita">
+<meta property="og:title" content="Dashboard - XDigitalKita">
+<meta property="og:description" content="Dashboard XDigitalKita untuk mengelola saldo, QRIS, transaksi, aktivitas, dan akses API.">
+<meta property="og:url" content="https://xdigitalkita.my.id/dashboard">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://xdigitalkita.my.id/icon.svg">
+<meta property="og:image:alt" content="XDigitalKita">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Dashboard - XDigitalKita">
+<meta name="twitter:description" content="Dashboard XDigitalKita untuk mengelola saldo, QRIS, transaksi, aktivitas, dan akses API.">
+<meta name="twitter:image" content="https://xdigitalkita.my.id/icon.svg">
+<meta name="twitter:image:alt" content="XDigitalKita">
+<link rel="sitemap" type="application/xml" href="/sitemap.xml">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/glass.css">
+<meta name="telegram-channel-url" content="<%= telegramChannelUrl || '' %>">
+<meta name="telegram-channel-title" content="<%= telegramChannelTitle || 'Channel Information' %>">
+</head>
+<body class="glass dark">
+<header class="glass-header">
+  <div class="brand">
+    <a href="/" class="brand" style="text-decoration:none;">
+      <span class="brand-mark">
+        <img class="ui-icon" src="/icon.svg" alt="XDigitalKita">
+      </span>
+      <span>XDigitalKita</span>
+    </a>
+  </div>
+  <div class="header-actions">
+    <a class="icon-btn" href="/" aria-label="Beranda" title="Beranda">
+      <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    </a>
+    <button class="icon-btn" id="themeBtn" type="button" aria-label="Ganti tema">
+      <svg class="ui-icon" id="themeIcon" viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+    </button>
+    <a class="avatar" href="/profile" aria-label="Profil"<% if (user.avatar) { %> style="background-image:url('<%= user.avatar %>')"<% } %>>
+      <% if (!user.avatar) { %><%= user.name ? user.name[0].toUpperCase() : "U" %><% } %>
+    </a>
+  </div>
+</header>
+
+<main class="page">
+  <section class="glass-card saldo-card">
+    <div class="saldo-top">
+      <div>
+        <div class="saldo-label">
+          Saldo Tersedia
+          <button type="button" id="refreshSaldo" aria-label="Perbarui saldo">
+            <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M20 11a8 8 0 0 0-14.5-4.5L4 8"/><path d="M4 4v4h4"/><path d="M4 13a8 8 0 0 0 14.5 4.5L20 16"/><path d="M20 20v-4h-4"/></svg>
+          </button>
+        </div>
+        <div class="saldo-value" id="saldoValue">Rp <%= Number(user.saldo || 0).toLocaleString('id-ID') %></div>
+        <a href="/withdraw" class="glass-btn saldo-action small">
+          Tarik Saldo
+          <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </a>
+      </div>
+      <div class="hero-wallet">
+        <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M4 7.5A2.5 2.5 0 0 1 6.5 5H18a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6.5A2.5 2.5 0 0 1 4 16.5z"/><path d="M4 8h13a3 3 0 0 1 3 3v4H15a3 3 0 0 1 0-6h5"/><path d="M16 12h.01"/></svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="glass-card summary-card" id="summary">
+    <div class="summary-head">
+      <h2>Ringkasan Hari Ini</h2>
+      <span class="date-pill"><%= new Date().toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long' }) %></span>
+    </div>
+    <div class="summary-grid">
+      <div class="summary-cell"><span>Masuk Hari Ini</span><strong>Rp <%= stats.todayIncome.toLocaleString('id-ID') %></strong></div>
+      <div class="summary-cell"><span>TRX Sukses</span><strong><%= stats.todayTransactions %> transaksi</strong></div>
+      <div class="summary-cell"><span>Rata-rata/TRX</span><strong>Rp <%= stats.todayAverage.toLocaleString('id-ID') %></strong></div>
+    </div>
+  </section>
+
+  <section class="stats-grid">
+    <div class="stat-card"><div class="stat-top"><span>Total Transaksi</span><div class="stat-icon"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 20V10M12 20V4M19 20v-7"/></svg></div></div><strong><%= stats.total %></strong></div>
+    <div class="stat-card success"><div class="stat-top"><span>Berhasil</span><div class="stat-icon"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="m5 12 4 4L19 6"/></svg></div></div><strong><%= stats.successful %></strong></div>
+    <div class="stat-card pending"><div class="stat-top"><span>Pending</span><div class="stat-icon"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="8"/><path d="M12 8v5l3 2"/></svg></div></div><strong><%= stats.pending %></strong></div>
+    <div class="stat-card failed"><div class="stat-top"><span>Gagal</span><div class="stat-icon"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="8"/><path d="m9.5 9.5 5 5M14.5 9.5l-5 5"/></svg></div></div><strong><%= stats.failed %></strong></div>
+    <div class="stat-card income"><div class="stat-top"><span>Total Income</span><div class="stat-icon"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="4" y="5" width="16" height="14" rx="2"/><path d="M8 9h8M8 13h5"/></svg></div></div><strong>Rp <%= stats.totalIncome.toLocaleString('id-ID') %></strong></div>
+    <div class="stat-card fee"><div class="stat-top"><span>Total Fee</span><div class="stat-icon"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M6 7h12M8 12h8M10 17h4"/><rect x="4" y="4" width="16" height="16" rx="3"/></svg></div></div><strong>Rp <%= stats.totalFee.toLocaleString('id-ID') %></strong></div>
+  </section>
+
+  <section class="glass-card notice-card">
+    <div class="notice-icon">
+      <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2.2"><path d="M12 3 3.5 18h17z"/><path d="M12 9v4M12 16v.01"/></svg>
+    </div>
+    <div class="notice-copy">
+      <small>Peringatan</small>
+      <strong>Gunakan layanan untuk transaksi yang legal</strong>
+      <p>Aktivitas ilegal, penipuan, dan penggunaan yang melanggar hukum dilarang.</p>
+    </div>
+    <div class="notice-arrow">
+      <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+    </div>
+  </section>
+
+  <section class="glass-card status-card">
+    <div class="section-title"><h2>Status API</h2><span class="live-badge">LIVE</span></div>
+    <div class="status-head">
+      <div class="status-main">
+        <i class="status-dot"></i>
+        <div><strong>Beroperasi normal</strong><span>Semua sistem aktif</span></div>
+      </div>
+      <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="m5 12 4 4L19 6"/></svg>
+    </div>
+    <div class="status-list">
+      <div class="status-row"><span class="status-service"><i></i>Gateway QRIS</span><span class="status-ok">Normal</span></div>
+      <div class="status-row"><span class="status-service"><i></i>Webhook & Callback</span><span class="status-ok">Normal</span></div>
+      <div class="status-row"><span class="status-service"><i></i>Payout / Penarikan</span><span class="status-ok">Normal</span></div>
+    </div>
+  </section>
+
+  <section class="glass-card" id="transactions">
+    <div class="section-title">
+      <h2>Transaksi Terbaru</h2>
+      <span class="section-link">Ketuk transaksi untuk detail</span>
+    </div>
+    <div class="tx-list" id="txList">
+      <% if (!transactions.length) { %>
+        <div class="empty-state">Belum ada transaksi.</div>
+      <% } %>
+      <% transactions.forEach(function(t){ %>
+        <div class="tx-item" role="button" tabindex="0"
+          data-id="<%= t.id %>"
+          data-description="<%= t.description || 'Pembayaran' %>"
+          data-amount="<%= Number(t.amount || 0) %>"
+          data-fee="<%= Number(t.adminFee || 0) %>"
+          data-total="<%= Number(t.totalAmount || 0) %>"
+          data-status="<%= t.status %>"
+          data-date="<%= new Date(t.createdAt).toLocaleString('id-ID') %>"
+          data-qr="<%= t.qrImage || t.qrUrl || '' %>">
+          <div class="tx-info">
+            <div class="tx-desc"><%= t.description || 'Pembayaran' %></div>
+            <div class="tx-date"><%= new Date(t.createdAt).toLocaleString('id-ID') %></div>
+          </div>
+          <div class="tx-right">
+            <div class="tx-amount">Rp <%= Number(t.amount || 0).toLocaleString('id-ID') %></div>
+            <span class="badge <%= t.status %>"><%= t.status %></span>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  </section>
+
+  <section class="glass-card" id="activity">
+    <div class="section-title"><h2>Aktivitas Terbaru</h2><span class="section-link">Live</span></div>
+    <div class="activity-list" id="activityList">
+      <% if (!activity.length) { %>
+        <div class="empty-state">Belum ada aktivitas.</div>
+      <% } %>
+      <% activity.forEach(function(a){ %>
+        <div class="activity-item">
+          <div class="activity-dot">
+            <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="8"/><path d="m9.5 9.5 5 5M14.5 9.5l-5 5"/></svg>
+          </div>
+          <div class="activity-copy">
+            <strong><%= a.type %></strong>
+            <span><%= a.detail %></span>
+          </div>
+          <div class="activity-time"><%= new Date(a.at).toLocaleString('id-ID') %></div>
+        </div>
+      <% }) %>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-title"><h2>Menu Lainnya</h2></div>
+    <div class="menu-grid">
+      <a class="menu-card" href="#summary"><div class="menu-icon"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 20V10M12 20V4M19 20v-7"/></svg></div><div class="menu-copy"><strong>Statistik</strong><span>Ringkasan transaksi</span></div><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></a>
+      <a class="menu-card" href="#transactions"><div class="menu-icon"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M6 5h12v14H6z"/><path d="M9 9h6M9 13h6"/></svg></div><div class="menu-copy"><strong>Riwayat</strong><span>Semua transaksi terbaru</span></div><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></a>
+      <a class="menu-card" href="/docs"><div class="menu-icon"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M6 4h9l3 3v13H6z"/><path d="M14 4v4h4M9 12h6M9 16h6"/></svg></div><div class="menu-copy"><strong>Dokumentasi API</strong><span>Panduan integrasi</span></div><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></a>
+      <a class="menu-card" href="/profile"><div class="menu-icon"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="8" r="3"/><path d="M5 20c1.5-4 12.5-4 14 0"/></svg></div><div class="menu-copy"><strong>Profil & API Key</strong><span>Akun dan kredensial</span></div><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></a>
+    </div>
+  </section>
+
+  <div class="footer-note">XDigitalKita • QRIS H2H</div>
+</main>
+
+<nav class="bottom-nav<%= isAdmin ? " admin-visible" : "" %>">
+  <a href="/dashboard" class="nav-item active"><span class="nav-icon"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="m4 10 8-6 8 6v10H4z"/><path d="M9 20v-6h6v6"/></svg></span><span>Home</span></a>
+  <a href="/qris" class="nav-item"><span class="nav-icon"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4z"/><path d="M14 14h3v3h-3zM17 17h3v3h-3z"/></svg></span><span>QRIS</span></a>
+  <a href="/withdraw" class="nav-item"><span class="nav-icon"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 4v12"/><path d="m7 11 5 5 5-5"/><path d="M5 20h14"/></svg></span><span>Tarik</span></a>
+<% if (isAdmin) { %>
+  <a href="/admin" class="nav-item admin-only"><span class="nav-icon"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 3 4 7v5c0 4.6 3.1 7.7 8 9 4.9-1.3 8-4.4 8-9V7z"/><path d="m9 12 2 2 4-4"/></svg></span><span>Admin</span></a>
+<% } %>
+  <a href="/docs" class="nav-item"><span class="nav-icon"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M6 4h9l3 3v13H6z"/><path d="M14 4v4h4M9 12h6M9 16h6"/></svg></span><span>Docs</span></a>
+  <a href="/profile" class="nav-item"><span class="nav-icon"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="8" r="3"/><path d="M5 20c1.5-4 12.5-4 14 0"/></svg></span><span>Profil</span></a>
+</nav>
+
+<div class="modal" id="txModal" aria-hidden="true">
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="txModalTitle">
+    <div class="modal-head">
+      <h3 id="txModalTitle">Detail Transaksi</h3>
+      <button class="modal-close" type="button" id="closeTxModal" aria-label="Tutup">
+        <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="m7 7 10 10M17 7 7 17"/></svg>
+      </button>
+    </div>
+    <div class="detail-grid">
+      <div class="detail-row"><span>Status</span><strong id="modalTxStatus" class="badge pending">pending</strong></div>
+      <div class="detail-row"><span>Keterangan</span><strong id="modalTxDescription">-</strong></div>
+      <div class="detail-row"><span>Nominal</span><strong id="modalTxAmount">Rp 0</strong></div>
+      <div class="detail-row"><span>Biaya Admin</span><strong id="modalTxFee">Rp 100</strong></div>
+      <div class="detail-row"><span>Total Bayar</span><strong id="modalTxTotal">Rp 0</strong></div>
+      <div class="detail-row"><span>ID Transaksi</span><code id="modalTxId">-</code></div>
+      <div class="detail-row"><span>Dibuat</span><strong id="modalTxDate">-</strong></div>
+    </div>
+    <div class="modal-qr" id="modalQrWrap" style="display:none"><img id="modalQr" src="" alt="QRIS transaksi"></div>
+    <div class="modal-actions">
+      <button class="glass-btn primary" type="button" id="modalCheckBtn">Cek Status</button>
+      <button class="glass-btn outline" type="button" id="modalDoneBtn">Tutup</button>
+    </div>
+  </div>
+</div>
+
+<script>window.userId = <%- JSON.stringify(user.id) %>;</script>
+<script src="/js/main.js"></script>
+</body>
+</html>

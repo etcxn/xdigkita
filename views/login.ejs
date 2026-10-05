@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>XDigitalKita - QRIS H2H</title>
+<meta name="description" content="Platform QRIS H2H XDigitalKita untuk developer dan bisnis, dengan pembuatan QRIS dinamis, status transaksi, saldo, dan API.">
+<meta name="keywords" content="XDigitalKita, QRIS H2H, API QRIS, QRIS dinamis, payment API, H2H payment, QRIS Indonesia">
+<meta name="author" content="XDigitalKita">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+<meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+<meta name="theme-color" content="#0b0b0c">
+<meta name="application-name" content="XDigitalKita">
+<link rel="canonical" href="https://xdigitalkita.my.id/">
+<link rel="apple-touch-icon" href="/icon.svg">
+<meta property="og:locale" content="id_ID">
+<meta property="og:site_name" content="XDigitalKita">
+<meta property="og:title" content="XDigitalKita - QRIS H2H">
+<meta property="og:description" content="Platform QRIS H2H XDigitalKita untuk developer dan bisnis, dengan pembuatan QRIS dinamis, status transaksi, saldo, dan API.">
+<meta property="og:url" content="https://xdigitalkita.my.id/">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://xdigitalkita.my.id/icon.svg">
+<meta property="og:image:alt" content="XDigitalKita">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="XDigitalKita - QRIS H2H">
+<meta name="twitter:description" content="Platform QRIS H2H XDigitalKita untuk developer dan bisnis, dengan pembuatan QRIS dinamis, status transaksi, saldo, dan API.">
+<meta name="twitter:image" content="https://xdigitalkita.my.id/icon.svg">
+<meta name="twitter:image:alt" content="XDigitalKita">
+<link rel="sitemap" type="application/xml" href="/sitemap.xml">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/glass.css">
+<meta name="telegram-channel-url" content="<%= telegramChannelUrl || '' %>">
+<meta name="telegram-channel-title" content="<%= telegramChannelTitle || 'Channel Information' %>">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "XDigitalKita",
+  "url": "https://xdigitalkita.my.id/",
+  "description": "Platform QRIS H2H XDigitalKita untuk developer dan bisnis, dengan pembuatan QRIS dinamis, status transaksi, saldo, dan API.",
+  "publisher": {
+    "@type": "Organization",
+    "name": "XDigitalKita",
+    "url": "https://xdigitalkita.my.id/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://xdigitalkita.my.id/icon.svg"
+    }
+  }
+}
+</script>
+</head>
+<body class="glass dark">
+<div class="auth-wrap">
+  <div class="glass-card auth-card">
+    <a href="/" class="login-back-link">
+      <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+      <span>Kembali ke Beranda</span>
+    </a>
+    <div class="auth-brand">
+      <div class="brand-icon">
+        <img class="ui-icon" src="/icon.svg" alt="XDigitalKita">
+      </div>
+      <h1>XDigitalKita</h1>
+      <p>Satu dashboard untuk alur pembayaran yang ringkas.</p>
+    </div>
+    <div class="auth-tabs">
+      <button class="auth-tab active" data-tab="login" type="button">Masuk</button>
+      <button class="auth-tab" data-tab="register" type="button">Daftar</button>
+    </div>
+    <div id="loginPanel">
+      <div class="alert" id="loginAlert"></div>
+      <input class="glass-input" type="email" id="loginEmail" autocomplete="email" placeholder="Email">
+      <input class="glass-input" type="password" id="loginPass" autocomplete="current-password" placeholder="Password">
+      <button class="glass-btn primary" id="loginBtn" type="button">Masuk</button>
+    </div>
+    <div id="registerPanel" style="display:none">
+      <div class="alert" id="regAlert"></div>
+      <input class="glass-input" type="text" id="regName" autocomplete="name" placeholder="Nama">
+      <input class="glass-input" type="email" id="regEmail" autocomplete="email" placeholder="Email">
+      <input class="glass-input" type="password" id="regPass" autocomplete="new-password" placeholder="Password">
+      <button class="glass-btn primary" id="regBtn" type="button">Daftar</button>
+    </div>
+    <div class="auth-sep" id="oauthSep">atau masuk dengan</div>
+    <div class="alert" id="oauthAlert"></div>
+    <div class="oauth-row">
+      <a class="glass-btn outline oauth-provider-btn" id="googleOAuthBtn" href="/auth/google?mode=login" aria-label="Masuk dengan Google">
+        <svg class="oauth-icon google-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path fill="#4285F4" d="M21.35 12.27c0-.79-.07-1.56-.2-2.27H12v4.3h5.24a4.48 4.48 0 0 1-1.94 2.94v2.45h3.14c1.84-1.69 2.91-4.18 2.91-7.42Z"/>
+          <path fill="#34A853" d="M12 21.5c2.63 0 4.84-.87 6.45-2.36l-3.14-2.45c-.87.58-1.98.92-3.31.92-2.54 0-4.7-1.72-5.47-4.03H3.29v2.53A9.75 9.75 0 0 0 12 21.5Z"/>
+          <path fill="#FBBC05" d="M6.53 13.58A5.86 5.86 0 0 1 6.23 12c0-.55.11-1.08.3-1.58V7.89H3.29A9.76 9.76 0 0 0 2.25 12c0 1.57.38 3.06 1.04 4.11l3.24-2.53Z"/>
+          <path fill="#EA4335" d="M12 6.39c1.43 0 2.71.49 3.72 1.45l2.79-2.79C16.83 3.47 14.63 2.5 12 2.5a9.75 9.75 0 0 0-8.71 5.39l3.24 2.53C7.3 8.11 9.46 6.39 12 6.39Z"/>
+        </svg>
+        <span>Google</span>
+      </a>
+      <a class="glass-btn outline oauth-provider-btn" id="githubOAuthBtn" href="/auth/github?mode=login" aria-label="Masuk dengan GitHub">
+        <svg class="oauth-icon github-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2.5a9.5 9.5 0 0 0-3 18.51c.48.09.65-.2.65-.46v-1.68c-2.65.58-3.21-1.13-3.21-1.13-.44-1.1-1.08-1.39-1.08-1.39-.89-.61.07-.6.07-.6.98.07 1.5 1.01 1.5 1.01.87 1.49 2.28 1.06 2.84.81.09-.63.34-1.06.62-1.3-2.12-.24-4.34-1.06-4.34-4.72 0-1.04.37-1.89.98-2.56-.1-.24-.43-1.21.09-2.53 0 0 .8-.26 2.61.98A9.03 9.03 0 0 1 12 7.13c.81 0 1.62.11 2.38.33 1.81-1.24 2.61-.98 2.61-.98.52 1.32.19 2.29.09 2.53.61.67.98 1.52.98 2.56 0 3.67-2.23 4.47-4.35 4.71.34.3.65.89.65 1.8v2.67c0 .26.17.56.66.46A9.5 9.5 0 0 0 12 2.5Z"/></svg>
+        <span>GitHub</span>
+      </a>
+    </div>
+    <p style="margin-top:0.8rem;text-align:center;color:var(--text-dim);font-size:0.58rem">Gunakan akun yang benar-benar kamu miliki.</p>
+  </div>
+</div>
+<script src="/js/main.js"></script>
+</body>
+</html>

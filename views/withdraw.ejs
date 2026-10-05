@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tarik Saldo - XDigitalKita</title>
+<meta name="description" content="Ajukan penarikan saldo dari akun XDigitalKita ke rekening bank atau e-wallet yang tersedia.">
+<meta name="keywords" content="tarik saldo XDigitalKita, withdraw saldo, penarikan manual">
+<meta name="author" content="XDigitalKita">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="googlebot" content="noindex, nofollow, noarchive">
+<meta name="theme-color" content="#0b0b0c">
+<meta name="application-name" content="XDigitalKita">
+<link rel="canonical" href="https://xdigitalkita.my.id/withdraw">
+<link rel="apple-touch-icon" href="/icon.svg">
+<meta property="og:locale" content="id_ID">
+<meta property="og:site_name" content="XDigitalKita">
+<meta property="og:title" content="Tarik Saldo - XDigitalKita">
+<meta property="og:description" content="Ajukan penarikan saldo dari akun XDigitalKita ke rekening bank atau e-wallet yang tersedia.">
+<meta property="og:url" content="https://xdigitalkita.my.id/withdraw">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://xdigitalkita.my.id/icon.svg">
+<meta property="og:image:alt" content="XDigitalKita">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Tarik Saldo - XDigitalKita">
+<meta name="twitter:description" content="Ajukan penarikan saldo dari akun XDigitalKita ke rekening bank atau e-wallet yang tersedia.">
+<meta name="twitter:image" content="https://xdigitalkita.my.id/icon.svg">
+<meta name="twitter:image:alt" content="XDigitalKita">
+<link rel="sitemap" type="application/xml" href="/sitemap.xml">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/glass.css">
+<meta name="telegram-channel-url" content="<%= telegramChannelUrl || '' %>">
+<meta name="telegram-channel-title" content="<%= telegramChannelTitle || 'Channel Information' %>">
+</head>
+<body class="glass dark">
+<header class="glass-header">
+  <div class="brand">
+    <span class="brand-mark"><img class="ui-icon" src="/icon.svg" alt=""></span>
+    <span>Tarik Saldo</span>
+  </div>
+  <div class="header-actions"><a href="/dashboard" class="icon-btn" aria-label="Kembali"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg></a></div>
+</header>
+<main class="page">
+  <div class="page-title"><h1>Penarikan</h1><p>Minimal penarikan Rp 12.500. Tidak membutuhkan PIN. Semua penarikan diproses manual oleh admin.</p></div>
+  <section class="glass-card">
+    <div class="alert" id="wdAlert"></div>
+    <input class="glass-input" type="number" id="wdAmount" min="12500" inputmode="numeric" placeholder="Jumlah (min 12.500)">
+    <input class="glass-input" type="text" id="wdBank" placeholder="Bank / E-Wallet">
+    <input class="glass-input" type="text" id="wdAccount" placeholder="Nomor rekening / akun">
+    <input class="glass-input" type="text" id="wdHolder" placeholder="Atas nama">
+    <button class="glass-btn primary" id="wdBtn" type="button">Ajukan Penarikan</button>
+  </section>
+  <section class="glass-card">
+    <div class="section-title"><h2>Riwayat Penarikan</h2></div>
+    <div class="tx-list">
+      <% if (!withdrawals.length) { %>
+        <div class="empty-state">Belum ada penarikan.</div>
+      <% } %>
+      <% withdrawals.forEach(function(w){ %>
+        <div class="tx-item" tabindex="0">
+          <div class="tx-info">
+            <div class="tx-desc">Rp <%= Number(w.amount || 0).toLocaleString('id-ID') %></div>
+            <div class="tx-date"><%= w.bank %> • <%= w.account %> • <%= new Date(w.createdAt).toLocaleString('id-ID') %></div>
+          </div>
+          <span class="badge <%= w.status %>"><%= w.status %></span>
+        </div>
+      <% }) %>
+    </div>
+  </section>
+</main>
+<nav class="bottom-nav<%= isAdmin ? " admin-visible" : "" %>">
+  <a href="/dashboard" class="nav-item"><span class="nav-icon"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="m4 10 8-6 8 6v10H4z"/><path d="M9 20v-6h6v6"/></svg></span><span>Home</span></a>
+  <a href="/qris" class="nav-item"><span class="nav-icon"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4z"/><path d="M14 14h3v3h-3zM17 17h3v3h-3z"/></svg></span><span>QRIS</span></a>
+  <a href="/withdraw" class="nav-item active"><span class="nav-icon"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 4v12"/><path d="m7 11 5 5 5-5"/><path d="M5 20h14"/></svg></span><span>Tarik</span></a>
+<% if (isAdmin) { %>
+  <a href="/admin" class="nav-item admin-only"><span class="nav-icon"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 3 4 7v5c0 4.6 3.1 7.7 8 9 4.9-1.3 8-4.4 8-9V7z"/><path d="m9 12 2 2 4-4"/></svg></span><span>Admin</span></a>
+<% } %>
+  <a href="/docs" class="nav-item"><span class="nav-icon"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M6 4h9l3 3v13H6z"/><path d="M14 4v4h4M9 12h6M9 16h6"/></svg></span><span>Docs</span></a>
+  <a href="/profile" class="nav-item"><span class="nav-icon"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="8" r="3"/><path d="M5 20c1.5-4 12.5-4 14 0"/></svg></span><span>Profil</span></a>
+</nav>
+<script src="/js/main.js"></script>
+</body>
+</html>

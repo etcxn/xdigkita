@@ -1,0 +1,26 @@
+{
+  "name": "xdigitalkita",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "dev": "node server.js",
+    "build": "echo 'Build complete'",
+    "start": "node server.js",
+    "lint": "node --check server.js config.js middleware/auth.js routes/*.js services/*.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "express-session": "^1.18.0",
+    "ejs": "^3.1.10",
+    "ws": "^8.17.0",
+    "axios": "^1.7.2",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.2",
+    "@octokit/rest": "^21.0.0",
+    "nanoid": "^5.0.7",
+    "cookie-parser": "^1.4.6",
+    "google-auth-library": "^11.1.0",
+    "form-data": "^4.0.4",
+    "multer": "^2.0.2"
+  }
+}
