@@ -54,11 +54,11 @@ router.get("/", async (req, res) => {
   const user = await getUser(req);
   const globalStats = await db.getGlobalStats();
   const stats = {
-    realUsers: globalStats.realUsers,
+    realUsers: 1000 + globalStats.realUsers,
     totalUsers: 1000 + globalStats.realUsers,
-    realTransactions: globalStats.realTransactions,
+    realTransactions: 3400 + globalStats.realTransactions,
     totalTransactions: 3400 + globalStats.realTransactions,
-    realWithdrawals: globalStats.realWithdrawals,
+    realWithdrawals: 342 + globalStats.realWithdrawals,
     totalWithdrawals: 342 + globalStats.realWithdrawals
   };
 
