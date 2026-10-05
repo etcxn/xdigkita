@@ -5,7 +5,7 @@ const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const path = require("path");
 const config = require("./config");
-const db = require("./services/githubdb");
+const db = require("./services/jsondb");
 const transactionMonitor = require("./services/transaction-monitor");
 
 const authRoutes = require("./routes/auth");
@@ -65,9 +65,9 @@ async function init() {
   try {
     await db.ensureFile("users.json", []);
   } catch (err) {
-    console.warn("GitHub DB initialization warning:", err.message);
+    console.warn("Database initialization warning:", err.message);
   }
-  const port = process.env.PORT || config.port || 3000;
+  const port = config.port;
   server.listen(port, "0.0.0.0", () => {
     console.log(`XDigitalKita berjalan di port ${port}`);
     try {
@@ -80,7 +80,7 @@ async function init() {
 
 init().catch(err => {
   console.error("Initialization error:", err);
-  const port = process.env.PORT || config.port || 3000;
+  const port = config.port;
   server.listen(port, "0.0.0.0", () => {
     console.log(`XDigitalKita fallback berjalan di port ${port}`);
   });

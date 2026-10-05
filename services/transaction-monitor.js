@@ -1,5 +1,5 @@
 const config = require("../config");
-const db = require("./githubdb");
+const db = require("./jsondb");
 const bq = require("./buatqris");
 const tg = require("./telegram");
 

@@ -1,7 +1,7 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const config = require("../config");
-const db = require("../services/githubdb");
+const db = require("../services/jsondb");
 const { isAdminEmail } = require("../middleware/auth");
 
 const router = express.Router();

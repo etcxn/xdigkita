@@ -6,7 +6,7 @@ const axios = require("axios");
 const { OAuth2Client } = require("google-auth-library");
 const { nanoid } = require("nanoid");
 const config = require("../config");
-const db = require("../services/githubdb");
+const db = require("../services/jsondb");
 
 const router = express.Router();
 

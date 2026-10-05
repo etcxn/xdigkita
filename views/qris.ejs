@@ -3,72 +3,113 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Buat QRIS - XDigitalKita</title>
-<meta name="description" content="Buat QRIS dinamis melalui XDigitalKita dengan biaya admin Rp 100 untuk setiap QRIS yang dibuat.">
-<meta name="keywords" content="buat QRIS, QRIS dinamis, QRIS H2H, XDigitalKita QRIS">
-<meta name="author" content="XDigitalKita">
-<meta name="robots" content="noindex, nofollow, noarchive">
-<meta name="googlebot" content="noindex, nofollow, noarchive">
+<title>Buat QRIS Dinamis - XDigitalKita</title>
+<meta name="description" content="Buat tagihan QRIS dinamis sekali pakai instan dengan biaya admin transparan.">
 <meta name="theme-color" content="#0b0b0c">
 <meta name="application-name" content="XDigitalKita">
 <link rel="canonical" href="https://xdigitalkita.my.id/qris">
 <link rel="apple-touch-icon" href="/icon.svg">
-<meta property="og:locale" content="id_ID">
 <meta property="og:site_name" content="XDigitalKita">
-<meta property="og:title" content="Buat QRIS - XDigitalKita">
-<meta property="og:description" content="Buat QRIS dinamis melalui XDigitalKita dengan biaya admin Rp 100 untuk setiap QRIS yang dibuat.">
+<meta property="og:title" content="Buat QRIS Dinamis - XDigitalKita">
+<meta property="og:description" content="Generate QRIS dinamis instan dalam satu dashboard ringkas.">
 <meta property="og:url" content="https://xdigitalkita.my.id/qris">
 <meta property="og:type" content="website">
-<meta property="og:image" content="https://xdigitalkita.my.id/icon.svg">
-<meta property="og:image:alt" content="XDigitalKita">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Buat QRIS - XDigitalKita">
-<meta name="twitter:description" content="Buat QRIS dinamis melalui XDigitalKita dengan biaya admin Rp 100 untuk setiap QRIS yang dibuat.">
-<meta name="twitter:image" content="https://xdigitalkita.my.id/icon.svg">
-<meta name="twitter:image:alt" content="XDigitalKita">
-<link rel="sitemap" type="application/xml" href="/sitemap.xml">
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/glass.css">
-<meta name="telegram-channel-url" content="<%= telegramChannelUrl || '' %>">
-<meta name="telegram-channel-title" content="<%= telegramChannelTitle || 'Channel Information' %>">
 </head>
 <body class="glass dark">
+
 <header class="glass-header">
   <div class="brand">
-    <span class="brand-mark"><img class="ui-icon" src="/icon.svg" alt=""></span>
-    <span>Buat QRIS</span>
+    <a href="/" class="brand" style="text-decoration:none;">
+      <span class="brand-mark"><img class="ui-icon" src="/icon.svg" alt="XDigitalKita"></span>
+      <span>Buat QRIS</span>
+    </a>
   </div>
-  <div class="header-actions"><a href="/dashboard" class="icon-btn" aria-label="Kembali"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg></a></div>
+  <div class="header-actions">
+    <a href="/dashboard" class="icon-btn" aria-label="Kembali ke Dashboard" title="Dashboard">
+      <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+    </a>
+  </div>
 </header>
+
 <main class="page">
-  <div class="page-title"><h1>QRIS Dinamis</h1><p>Buat tagihan QRIS sekali pakai dengan biaya admin Rp <%= adminFee.toLocaleString('id-ID') %>.</p></div>
+  <div class="page-title">
+    <h1>QRIS Dinamis Instan</h1>
+    <p>Generate kode QRIS sekali pakai otomatis. Sistem mendeteksi pelunasan secara real-time dan langsung mengkreditkan dana ke saldo Anda.</p>
+  </div>
+
   <section class="glass-card">
     <div class="alert" id="qrisAlert"></div>
-    <input class="glass-input" type="number" id="amount" min="1000" inputmode="numeric" placeholder="Nominal (min 1000)">
-    <input class="glass-input" type="text" id="description" maxlength="180" placeholder="Keterangan transaksi">
-    <div class="qris-info">
-      <div class="qris-info-row"><span>Biaya admin</span><strong>Rp <%= adminFee.toLocaleString('id-ID') %></strong></div>
-      <div class="qris-info-row"><span>Total dibayar</span><strong id="previewTotal">Rp 0</strong></div>
+    
+    <label class="demo-label" for="amount">Nominal Pembayaran</label>
+    <div class="demo-input-wrap">
+      <span class="demo-currency">Rp</span>
+      <input class="glass-input demo-input" type="number" id="amount" min="1000" inputmode="numeric" placeholder="10.000">
     </div>
-    <button class="glass-btn primary" id="createBtn" type="button">Buat QRIS</button>
-    <div id="qrisResult" style="display:none;margin-top:0.85rem">
-      <div class="qr-wrap"><img id="qrImage" src="" alt="QRIS"></div>
-      <div class="qris-info">
-        <div class="qris-info-row"><span>Nominal</span><strong id="qrisAmount"></strong></div>
-        <div class="qris-info-row"><span>Biaya admin</span><strong id="qrisFee"></strong></div>
-        <div class="qris-info-row"><span>Total</span><strong id="qrisTotal"></strong></div>
-        <div class="qris-info-row"><span>ID</span><code id="qrisId"></code></div>
+
+    <!-- Quick Preset Buttons -->
+    <div class="demo-quick-amounts" style="margin-bottom:0.9rem;">
+      <button type="button" class="quick-val-btn" onclick="document.getElementById('amount').value=10000;document.getElementById('amount').dispatchEvent(new Event('input'))">10k</button>
+      <button type="button" class="quick-val-btn" onclick="document.getElementById('amount').value=25000;document.getElementById('amount').dispatchEvent(new Event('input'))">25k</button>
+      <button type="button" class="quick-val-btn" onclick="document.getElementById('amount').value=50000;document.getElementById('amount').dispatchEvent(new Event('input'))">50k</button>
+      <button type="button" class="quick-val-btn" onclick="document.getElementById('amount').value=100000;document.getElementById('amount').dispatchEvent(new Event('input'))">100k</button>
+      <button type="button" class="quick-val-btn" onclick="document.getElementById('amount').value=250000;document.getElementById('amount').dispatchEvent(new Event('input'))">250k</button>
+    </div>
+
+    <label class="demo-label" for="description">Keterangan Pesanan</label>
+    <input class="glass-input" type="text" id="description" maxlength="180" placeholder="Contoh: Order #108 atau Top Up">
+
+    <div class="qris-info" style="margin:1rem 0;">
+      <div class="qris-info-row">
+        <span>Biaya admin tetap</span>
+        <strong>Rp <%= adminFee.toLocaleString('id-ID') %></strong>
       </div>
-      <button class="glass-btn outline" id="checkBtn" type="button">Cek Status</button>
-      <div style="margin-top:0.65rem"><span id="statusBadge" class="badge pending">pending</span></div>
+      <div class="qris-info-row total-highlight">
+        <span>Total yang harus dibayar</span>
+        <strong id="previewTotal" class="tabular-nums" style="color:#38bdf8;font-size:1.05rem;">Rp 0</strong>
+      </div>
+    </div>
+
+    <button class="glass-btn primary" id="createBtn" type="button" style="width:100%;min-height:48px;font-size:0.95rem;">
+      <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3zM17 17h3v3h-3z"/></svg>
+      <span>Buat QRIS Sekarang</span>
+    </button>
+
+    <!-- QRIS Result Container -->
+    <div id="qrisResult" style="display:none;margin-top:1.4rem;text-align:center;">
+      <div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:0.6rem;">Scan menggunakan BCA, Mandiri, BRI, GoPay, OVO, DANA, ShopeePay</div>
+      
+      <div class="qr-wrap">
+        <img id="qrImage" src="" alt="QRIS Dinamis" style="max-width:240px;width:100%;height:auto;display:block;">
+      </div>
+
+      <div class="qris-info" style="margin:1.2rem 0;text-align:left;">
+        <div class="qris-info-row"><span>Nominal Asli</span><strong id="qrisAmount" class="tabular-nums"></strong></div>
+        <div class="qris-info-row"><span>Biaya Admin</span><strong id="qrisFee" class="tabular-nums"></strong></div>
+        <div class="qris-info-row total-highlight"><span>Total Ditagih</span><strong id="qrisTotal" class="tabular-nums" style="color:#38bdf8;font-size:1.1rem;"></strong></div>
+        <div class="qris-info-row"><span>ID Transaksi</span><code id="qrisId" style="font-family:'JetBrains Mono',monospace;color:#f1f5f9;"></code></div>
+      </div>
+
+      <div style="display:flex;gap:0.5rem;justify-content:center;margin-bottom:0.8rem;">
+        <button class="glass-btn primary" id="checkBtn" type="button" style="flex:1;">
+          <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M20 11a8 8 0 0 0-14.5-4.5L4 8"/><path d="M4 4v4h4"/><path d="M4 13a8 8 0 0 0 14.5 4.5L20 16"/><path d="M20 20v-4h-4"/></svg>
+          <span>Cek Status Bayar</span>
+        </button>
+      </div>
+
+      <div>
+        <span id="statusBadge" class="badge pending">Menunggu Pembayaran</span>
+      </div>
     </div>
   </section>
 </main>
+
 <nav class="bottom-nav<%= isAdmin ? " admin-visible" : "" %>">
-  <a href="/dashboard" class="nav-item"><span class="nav-icon"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="m4 10 8-6 8 6v10H4z"/><path d="M9 20v-6h6v6"/></svg></span><span>Home</span></a>
+  <a href="/dashboard" class="nav-item"><span class="nav-icon"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="m4 10 8-6 8 6v10H4z"/><path d="M9 20v-6h6v6"/></svg></span><span>Dashboard</span></a>
   <a href="/qris" class="nav-item active"><span class="nav-icon"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4z"/><path d="M14 14h3v3h-3zM17 17h3v3h-3z"/></svg></span><span>QRIS</span></a>
   <a href="/withdraw" class="nav-item"><span class="nav-icon"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 4v12"/><path d="m7 11 5 5 5-5"/><path d="M5 20h14"/></svg></span><span>Tarik</span></a>
 <% if (isAdmin) { %>
@@ -77,6 +118,7 @@
   <a href="/docs" class="nav-item"><span class="nav-icon"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M6 4h9l3 3v13H6z"/><path d="M14 4v4h4M9 12h6M9 16h6"/></svg></span><span>Docs</span></a>
   <a href="/profile" class="nav-item"><span class="nav-icon"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="8" r="3"/><path d="M5 20c1.5-4 12.5-4 14 0"/></svg></span><span>Profil</span></a>
 </nav>
+
 <script src="/js/main.js"></script>
 </body>
 </html>

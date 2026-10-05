@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const config = require("../config");
-const db = require("../services/githubdb");
+const db = require("../services/jsondb");
 
 function authRequired(req, res, next) {
   const token = req.cookies?.token || req.headers.authorization?.replace("Bearer ", "");
