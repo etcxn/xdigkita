@@ -11,8 +11,8 @@ module.exports = {
   },
 
   github: {
-    token: process.env.GITHUB_TOKEN || "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",
-    owner: process.env.GITHUB_OWNER || "alwaysxell",
+    token: process.env.GITHUB_TOKEN || "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",
+    owner: process.env.GITHUB_OWNER || "etcxn",
     repo: process.env.GITHUB_REPO || "db",
     branch: process.env.GITHUB_BRANCH || "main"
   },
