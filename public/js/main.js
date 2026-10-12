@@ -124,34 +124,52 @@
   function openTransactionModal(item) {
     const modal = $("#txModal");
     if (!modal) return;
+    let source = {};
+    try {
+      source = item.dataset.tx ? JSON.parse(item.dataset.tx) : {};
+    } catch (e) {}
+    const rawAmount = Number(source.amount || item.dataset.amount || 0);
+    const rawFee = Number(source.adminFee ?? source.fee ?? item.dataset.fee ?? 100);
+    const createdAt = source.createdAt || source.created_at || item.dataset.date || "";
     const data = {
-      id: item.dataset.id || "-",
-      description: item.dataset.description || "Pembayaran",
-      amount: Number(item.dataset.amount || 0),
-      fee: Number(item.dataset.fee || 100),
-      total: Number(item.dataset.total || 0),
-      status: item.dataset.status || "pending",
-      date: item.dataset.date || "-",
-      qr: item.dataset.qr || ""
+      id: String(source.id || item.dataset.id || "-"),
+      description: String(source.description || item.dataset.description || "Pembayaran QRIS"),
+      amount: rawAmount,
+      fee: rawFee,
+      total: Number(source.totalAmount || source.total_amount || source.total || item.dataset.total || rawAmount + rawFee),
+      status: String(source.status || item.dataset.status || "pending").toLowerCase(),
+      date: createdAt ? new Date(createdAt).toLocaleString("id-ID") : "-",
+      paidAt: source.paidAt || source.paid_at || "",
+      qr: String(source.qrImage || source.qrUrl || source.qr || item.dataset.qr || "")
     };
     modal.dataset.activeId = data.id;
     $("#modalTxId").textContent = data.id;
-    $("#modalTxDescription").textContent = data.description;
+    $("#modalTxDesc").textContent = data.description;
     $("#modalTxAmount").textContent = formatIDR(data.amount);
     $("#modalTxFee").textContent = formatIDR(data.fee);
     $("#modalTxTotal").textContent = formatIDR(data.total);
-    $("#modalTxDate").textContent = data.date;
+    $("#modalTxTime").textContent = data.date;
+    const paidRow = $("#modalPaidRow");
+    const paidTime = $("#modalTxPaidTime");
+    if (paidRow && paidTime) {
+      paidRow.style.display = data.paidAt ? "flex" : "none";
+      paidTime.textContent = data.paidAt ? new Date(data.paidAt).toLocaleString("id-ID") : "-";
+    }
     const badge = $("#modalTxStatus");
-    badge.textContent = data.status;
-    badge.className = "badge " + data.status;
+    if (badge) {
+      badge.textContent = data.status;
+      badge.className = "badge " + data.status;
+    }
     const qrWrap = $("#modalQrWrap");
     const qr = $("#modalQr");
-    if (data.qr) {
-      qr.src = data.qr;
-      qrWrap.style.display = "grid";
-    } else {
-      qr.removeAttribute("src");
-      qrWrap.style.display = "none";
+    if (qrWrap && qr) {
+      if (data.qr) {
+        qr.src = data.qr;
+        qrWrap.style.display = "grid";
+      } else {
+        qr.removeAttribute("src");
+        qrWrap.style.display = "none";
+      }
     }
     modal.classList.add("show");
     modal.setAttribute("aria-hidden", "false");
@@ -166,9 +184,23 @@
   }
 
   function updateTransactionItem(id, status, saldo) {
-    const item = $$(".tx-item[data-id]").find(node => node.dataset.id === id);
+    const item = $$(".tx-item[data-id], .tx-item[data-tx]").find(node => {
+      if (node.dataset.id === id) return true;
+      try {
+        return JSON.parse(node.dataset.tx || "{}").id === id;
+      } catch (e) {
+        return false;
+      }
+    });
     if (item) {
       item.dataset.status = status;
+      if (item.dataset.tx) {
+        try {
+          const tx = JSON.parse(item.dataset.tx);
+          tx.status = status;
+          item.dataset.tx = JSON.stringify(tx);
+        } catch (e) {}
+      }
       const badge = $(".badge", item);
       if (badge) {
         badge.className = "badge " + status;
@@ -384,7 +416,7 @@
       return;
     }
 
-    const txItem = e.target.closest(".tx-item[data-id]");
+    const txItem = e.target.closest(".tx-item[data-id], .tx-item[data-tx]");
     if (txItem) {
       openTransactionModal(txItem);
       return;
@@ -396,7 +428,7 @@
       return;
     }
 
-    const modalCheckBtn = e.target.closest("#modalCheckBtn");
+    const modalCheckBtn = e.target.closest("#modalCheckBtn, #modalCheckStatusBtn");
     if (modalCheckBtn) {
       const modal = $("#txModal");
       const id = modal?.dataset.activeId;
@@ -409,6 +441,16 @@
       } finally {
         setButtonLoading(modalCheckBtn, false);
       }
+      return;
+    }
+
+    const modalCopyBtn = e.target.closest("#modalCopyIdBtn");
+    if (modalCopyBtn) {
+      const id = $("#modalTxId")?.textContent.trim();
+      if (!id || id === "-") return;
+      const copied = await copyText(id);
+      modalCopyBtn.textContent = copied ? "Tersalin" : "Gagal";
+      window.setTimeout(() => { modalCopyBtn.textContent = "Salin ID"; }, 1400);
       return;
     }
 
@@ -527,7 +569,7 @@
   });
 
   document.addEventListener("keydown", function (e) {
-    const txItem = e.target.closest?.(".tx-item[data-id]");
+    const txItem = e.target.closest?.(".tx-item[data-id], .tx-item[data-tx]");
     if (txItem && (e.key === "Enter" || e.key === " ")) {
       e.preventDefault();
       openTransactionModal(txItem);

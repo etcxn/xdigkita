@@ -55,7 +55,14 @@
 </head>
 <body class="glass dark">
 <div class="auth-wrap">
-  <div class="glass-card auth-card">
+  <div class="glass-card auth-card auth-split-card">
+    <aside class="auth-welcome-panel">
+      <span class="auth-welcome-kicker"><span class="pulse-dot"></span> PAYMENT PLATFORM</span>
+      <h2>WELCOME<br>BACK!</h2>
+      <p>Kelola pembayaran QRIS, pantau transaksi, dan akses integrasi API dalam satu ruang kerja yang nyaman.</p>
+      <div class="auth-welcome-glow"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="1.7"><path d="M4 7.5 12 3l8 4.5v9L12 21l-8-4.5z"/><path d="m8 12 2.5 2.5L16.5 8.5"/></svg></div>
+    </aside>
+    <div class="auth-form-panel">
     <a href="/" class="login-back-link">
       <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
       <span>Kembali ke Beranda</span>
@@ -102,8 +109,10 @@
       </a>
     </div>
     <p style="margin-top:0.8rem;text-align:center;color:var(--text-dim);font-size:0.58rem">Gunakan akun yang benar-benar kamu miliki.</p>
+    </div>
   </div>
 </div>
 <script src="/js/main.js"></script>
+<script src="/js/splash.js"></script>
 </body>
 </html>
